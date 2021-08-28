@@ -12,10 +12,8 @@ module.exports = {
   plugins: [
   ],
   rules: {
-    "@typescript-eslint/explicit-function-return-type": ["error"],
     "lines-between-class-members": ["error", "always", { "exceptAfterSingleLine": true }],
-    "space-before-function-paren": ["error"],
-    "vue/component-definition-name-casing": ["error", "kebab-case"],
+    "space-before-function-paren": ["error", 'never'],
     "@typescript-eslint/no-explicit-any": ["off"],
     "@typescript-eslint/ban-ts-comment": ["off"],
     "@typescript-eslint/explicit-module-boundary-types": ["off"],

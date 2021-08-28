@@ -1,3 +1,5 @@
+const isDev = process.env.NODE_ENV !== 'production'
+
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -35,7 +37,15 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    '@/plugins/global-components',
   ],
+  svgLoader: {
+    svgoConfig: {
+      plugins: [
+        { removeDimensions: true }, // Enables prefixing for SVG IDs
+      ],
+    },
+  },
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -47,8 +57,27 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
-    '@nuxtjs/style-resources'
+    '@nuxtjs/style-resources',
+    'nuxt-svg-loader',
   ],
+
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  scrollBehavior(to, from, savedPosition) {
+    if (to.hash) {
+      return {
+        selector: to.hash,
+      }
+    } else if (to.path === from.path) {
+      return null
+    } else if (savedPosition) {
+      return savedPosition
+    } else {
+      return {
+        x: 0,
+        y: 0,
+      }
+    }
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
@@ -57,6 +86,15 @@ export default {
         ['@babel/plugin-proposal-private-property-in-object', { loose: true }]
       ]
     },
+    splitChunks: {
+      layouts: true,
+      pages: true,
+      commons: true,
+      chunks: 'all',
+    },
 
+    optimization: {
+      minimize: !isDev,
+    },
   }
 }
