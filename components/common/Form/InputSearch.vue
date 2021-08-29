@@ -1,5 +1,5 @@
 <template>
-  <div class="input">
+  <div class="input" :class="{ 'input-hide': searchType === 'Dashboard' }">
     <input type="text" :placeholder="placeholderText" />
     <SvgIcon name="search" :width="15" />
   </div>
@@ -14,6 +14,7 @@ import { mapState } from 'vuex'
   computed: {
     ...mapState('header', {
       placeholder: 'placeholder',
+      searchType: 'searchType',
     }),
   },
 })
@@ -61,5 +62,10 @@ export default class InputSearch extends Vue {
     top: 13px;
     right: 15px;
   }
+}
+
+.input-hide {
+  pointer-events: none;
+  opacity: 0;
 }
 </style>

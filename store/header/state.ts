@@ -4,7 +4,7 @@ export interface IHeader {
 }
 
 export const initState = ():IHeader => ({
-  searchType: 'dashboard',
+  searchType: 'Dashboard',
   placeholder: 'search a dashboard'
 })
 export default initState

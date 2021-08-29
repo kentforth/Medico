@@ -27,7 +27,10 @@ import { mapMutations } from 'vuex'
   name: 'TheSidebar',
   computed: {},
   methods: {
-    ...mapMutations('header', ['SET_SEARCH_INPUT_PLACEHOLDER']),
+    ...mapMutations('header', [
+      'SET_SEARCH_INPUT_PLACEHOLDER',
+      'SET_SEARCH_TYPE',
+    ]),
   },
 })
 export default class TheSidebar extends Vue {
@@ -63,6 +66,7 @@ export default class TheSidebar extends Vue {
   setSearhType(title: string): void {
     this.searchType = title
     this.SET_SEARCH_INPUT_PLACEHOLDER(this.placeHolderText)
+    this.SET_SEARCH_TYPE(this.searchType)
   }
 }
 </script>
