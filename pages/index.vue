@@ -1,11 +1,14 @@
 <template>
-  <div>
-    sdfsdf
-  </div>
+  <div>sdfsdf</div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { Component, Vue } from 'nuxt-property-decorator'
 
-export default Vue.extend({})
+@Component({ name: 'Home' })
+export default class Home extends Vue {
+  created() {
+    this.$router.push({ name: 'dashboard' })
+  }
+}
 </script>
