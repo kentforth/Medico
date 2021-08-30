@@ -42,6 +42,7 @@ export default class TheHeader extends Vue {
 <style scoped lang="scss">
 .header {
   padding: rem(16px);
+  height: max-content;
 
   .container {
     display: flex;
