@@ -5,6 +5,10 @@
 
       <!--TABLE-->
       <TableAppointments />
+
+      <ButtonRound class="btn-round">
+        <SvgIcon name="stethoscope" :width="40" />
+      </ButtonRound>
     </div>
   </div>
 </template>
@@ -12,13 +16,31 @@
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
 import TableAppointments from '~/components/pages/Appointments/TableAppointments.vue'
+import ButtonRound from '~/components/common/ButtonRound.vue'
 
-@Component({ name: 'Appointments', components: { TableAppointments } })
+@Component({
+  name: 'Appointments',
+  components: { ButtonRound, TableAppointments },
+})
 export default class Appointments extends Vue {}
 </script>
 
 <style scoped lang="scss">
 .container {
   padding-top: 2em;
+
+  .btn-round {
+    background-color: $blue;
+    padding: rem(20px);
+    position: fixed;
+    bottom: rem(30px);
+    right: rem(30px);
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    transition: $transition;
+
+    &:hover {
+      background-color: $blue-dark;
+    }
+  }
 }
 </style>
