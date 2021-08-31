@@ -6,9 +6,13 @@
       <!--TABLE-->
       <TableAppointments />
 
+      <!--BUTTON-->
       <ButtonRound class="btn-round">
         <SvgIcon name="stethoscope" :width="40" />
       </ButtonRound>
+
+      <!--MODAL-->
+      <ModalAddItem />
     </div>
   </div>
 </template>
@@ -17,10 +21,11 @@
 import { Component, Vue } from 'nuxt-property-decorator'
 import TableAppointments from '~/components/pages/Appointments/TableAppointments.vue'
 import ButtonRound from '~/components/common/ButtonRound.vue'
+import ModalAddItem from '~/components/common/Modal/ModalAddItem.vue'
 
 @Component({
   name: 'Appointments',
-  components: { ButtonRound, TableAppointments },
+  components: { ModalAddItem, ButtonRound, TableAppointments },
 })
 export default class Appointments extends Vue {}
 </script>

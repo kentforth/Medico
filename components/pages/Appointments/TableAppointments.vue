@@ -109,7 +109,7 @@ export default class TableAppointments extends Vue {
     }
 
     th {
-      padding: rem(15px);
+      padding: rem(10px);
       &:nth-child(1) {
         width: rem(70px);
       }
@@ -130,13 +130,13 @@ export default class TableAppointments extends Vue {
     }
 
     td {
-      padding: 10px;
+      padding: rem(10px);
     }
 
     tr {
       text-align: left;
       &:hover {
-        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+        box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
         transition: 0.3s ease;
       }
       td {
@@ -194,6 +194,11 @@ export default class TableAppointments extends Vue {
     .btn-edit {
       transition: 0.3s ease;
       background-color: $blue-soft;
+
+      .svg-icon {
+        filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(314deg)
+          brightness(104%) contrast(105%);
+      }
 
       &:hover {
         background-color: $blue-dark;
