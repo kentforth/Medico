@@ -22,6 +22,8 @@ export default class FileChooser extends Vue {}
 <style scoped lang="scss">
 .file-chooser {
   &__button {
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px,
+      rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
     display: flex;
     background-color: $white;
     border: 1px solid $blue;
@@ -32,9 +34,20 @@ export default class FileChooser extends Vue {}
     color: $blue;
     font-weight: 600;
     cursor: pointer;
+    transition: 0.2s ease;
 
     .svg-icon {
       margin-left: rem(10px);
+    }
+
+    &:hover {
+      background-color: $blue;
+      color: $white;
+
+      .svg-icon {
+        filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(30deg)
+          brightness(103%) contrast(101%);
+      }
     }
   }
 }
