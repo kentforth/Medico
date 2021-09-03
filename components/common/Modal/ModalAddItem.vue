@@ -166,7 +166,7 @@ export default class ModalAddItem extends Vue {
       display: grid;
       grid-template-columns: 1fr 1fr;
       grid-gap: rem(20px);
-      margin: 0 rem(20px);
+      margin: rem(30px) rem(20px) 0 rem(20px);
 
       .input {
         grid-column: span 2;
