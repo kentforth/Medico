@@ -4,6 +4,7 @@
       id="file"
       type="file"
       accept="image/png, image/jpeg, image/jpg, image/webp"
+      @change="change($event.target.files)"
     />
     <label for="file" class="file-chooser__button">
       Select Image
@@ -16,7 +17,11 @@
 import { Component, Vue } from 'nuxt-property-decorator'
 
 @Component({ name: 'FileChooser' })
-export default class FileChooser extends Vue {}
+export default class FileChooser extends Vue {
+  change(files: object[]): void {
+    this.$emit('change', files)
+  }
+}
 </script>
 
 <style scoped lang="scss">
@@ -44,9 +49,8 @@ export default class FileChooser extends Vue {}
       background-color: $blue;
       color: $white;
 
-      .svg-icon {
-        filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(30deg)
-          brightness(103%) contrast(101%);
+      .svg-icon::v-deep path {
+        fill: $white;
       }
     }
   }

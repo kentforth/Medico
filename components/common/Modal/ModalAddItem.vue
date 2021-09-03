@@ -5,14 +5,14 @@
 
       <!--FILE CHOOSER-->
       <div class="form__image">
-        <SvgIcon name="user" :width="40" />
-        <img src="~/assets/icons/user.svg" alt="" class="form__image-icon" />
-        <FileChooser />
+        <SvgIcon v-if="!hasProfileImage" name="user" :width="40" />
+        <img v-else :src="profileImage" alt="" class="form__image-icon" />
+        <FileChooser @change="getImage" />
       </div>
 
       <!--INPUTS-->
       <div class="form__inputs">
-        <Input :placeholder="placeholder.name" />
+        <Input v-model="form.name" :placeholder="placeholder.name" />
         <Input :placeholder="placeholder.doctor" />
         <Input :placeholder="placeholder.email" />
         <Input :placeholder="placeholder.date" />
@@ -24,8 +24,12 @@
 
       <!--BUTTONS-->
       <div class="form__buttons">
-        <Button :text="buttonCancel" class="btn-cancel" />
-        <Button :text="buttonAdd" class="btn-add" />
+        <Button
+          :text="buttonCancel"
+          class="btn-cancel"
+          @click.native="cancel"
+        />
+        <Button :text="buttonAdd" class="btn-add" type="submit" />
       </div>
     </form>
   </div>
@@ -61,11 +65,49 @@ export default class ModalAddItem extends Vue {
     injure: 'Injure',
   }
 
+  profileImage: string | ArrayBuffer | null = ''
   buttonCancel: string = 'Cancel'
   buttonAdd: string = 'Add Appointment'
+  hasProfileImage: boolean = false
+
+  form = {
+    name: '',
+  }
+
+  get image(): string {
+    return '~assets/icons/user.svg'
+  }
+
+  /**
+   * get file from input
+   */
+  getImage(files: Blob[]): void {
+    if (files && files[0]) {
+      const reader = new FileReader()
+      reader.readAsDataURL(files[0])
+
+      reader.onload = (event) => {
+        this.setImage(event)
+      }
+    }
+  }
+
+  /**
+   * set image from file
+   * @param event
+   */
+  setImage(event: ProgressEvent<FileReader>): void {
+    this.profileImage = (event as any).target.result
+    this.hasProfileImage = true
+  }
 
   submit(): void {
     console.log('success')
+    console.log(this.form.name)
+  }
+
+  cancel(): void {
+    console.log('cancel')
   }
 }
 </script>
@@ -84,7 +126,7 @@ export default class ModalAddItem extends Vue {
 
   .form {
     background-color: $white;
-    width: 40%;
+    width: 30%;
     padding: rem(20px) 0 0 0;
     border-radius: $border-radius;
 
@@ -108,6 +150,12 @@ export default class ModalAddItem extends Vue {
     }
 
     &__image-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center top;
+
       svg {
         width: 40px;
         height: 40px;

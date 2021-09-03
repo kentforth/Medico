@@ -1,5 +1,5 @@
 <template>
-  <button class="button">
+  <button class="button" type="button">
     {{ text }}
   </button>
 </template>
@@ -21,5 +21,6 @@ export default class Button extends Vue {
   border: none;
   padding: rem(10px) rem(15px);
   font-family: 'Lato', sans-serif;
+  cursor: pointer;
 }
 </style>

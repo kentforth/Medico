@@ -1,6 +1,11 @@
 <template>
   <div class="input">
-    <input type="text" :placeholder="placeholder" />
+    <input
+      type="text"
+      :placeholder="placeholder"
+      :value="value"
+      @input="$emit('input', $event.target.value)"
+    />
   </div>
 </template>
 
@@ -12,6 +17,7 @@ import { Component, Prop, Vue } from 'nuxt-property-decorator'
 })
 export default class Input extends Vue {
   @Prop({ required: true, type: String }) placeholder!: string
+  @Prop({ type: String }) value!: string
 }
 </script>
 

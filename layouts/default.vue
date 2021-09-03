@@ -40,7 +40,7 @@ export default class Default extends Vue {
     }
   }
 
-  created() {
+  mounted() {
     const searchType: string =
       this.$route.name!.charAt(0).toUpperCase() +
       this.$route.name?.slice(1).toLowerCase()
