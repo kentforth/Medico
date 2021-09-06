@@ -38,6 +38,7 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     '@/plugins/global-components',
+    { src: '~/plugins/vee-validate.ts', ssr: false },
   ],
   svgLoader: {
     svgoConfig: {
@@ -81,6 +82,7 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    transpile: ['vee-validate'],
     babel: {
       plugins: [
         ['@babel/plugin-proposal-private-property-in-object', { loose: true }]

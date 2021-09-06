@@ -12,7 +12,22 @@
 
       <!--INPUTS-->
       <div class="form__inputs">
-        <Input v-model="form.name" :placeholder="placeholder.name" />
+        <ValidationObserver
+          v-slot="{ handleSubmit }"
+          ref="observer"
+          tag="div"
+          class="box input-form"
+        >
+          <ValidationProvider
+            v-slot="{ errors }"
+            rules="required"
+            class="box__item"
+            :name="$t('inputs')"
+          >
+            <Input v-model="form.name" :placeholder="placeholder.name" />
+          </ValidationProvider>
+        </ValidationObserver>
+
         <Input :placeholder="placeholder.doctor" />
         <Input :placeholder="placeholder.email" />
         <Input :placeholder="placeholder.date" />
@@ -29,7 +44,11 @@
           class="btn-cancel"
           @click.native="cancel"
         />
-        <Button :text="buttonAdd" class="btn-add" type="submit" />
+        <Button
+          :text="buttonAdd"
+          class="btn-add"
+          @click="handleSubmit(submit)"
+        />
       </div>
     </form>
   </div>
@@ -126,7 +145,7 @@ export default class ModalAddItem extends Vue {
 
   .form {
     background-color: $white;
-    width: 30%;
+    width: 450px;
     padding: rem(20px) 0 0 0;
     border-radius: $border-radius;
 
