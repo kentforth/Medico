@@ -1,0 +1,15 @@
+.el-date-editor {
+  .el-input {
+    &__inner {
+      width: 100%;
+      border-radius: rem(20px);
+      font-size: rem(16px);
+      padding: rem(10px) rem(40px) rem(10px) rem(20px);
+      outline: none;
+      background-color: $gray-soft;
+      border: 1px solid $gray-soft;
+      font-family: 'Lato', sans-serif;
+      color: $black;
+    }
+  }
+}

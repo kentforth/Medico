@@ -15,7 +15,6 @@ export default {
       { property: 'og:title', content: 'Medico' },
       { property: 'og:description', content: 'Medico is CRM system that helps to observe and change data about patients and employees in hospital' },
       { property: 'og:type', content: 'website' },
-      // { hid: 'og:image', name: 'og:image', content: 'https://any-page.com/any.png' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
@@ -33,10 +32,12 @@ export default {
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
     '~assets/scss/app.scss',
+    '~assets/scss/element-ui/app.scss'
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    '@/plugins/element-ui',
     '@/plugins/global-components',
     { src: '~/plugins/vee-validate.ts', ssr: false },
   ],
@@ -82,11 +83,18 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-    transpile: ['vee-validate'],
+    transpile: ['vee-validate', /^element-ui/],
     babel: {
       plugins: [
-        ['@babel/plugin-proposal-private-property-in-object', { loose: true }]
-      ]
+        [
+          'component',
+          {
+            libraryName: 'element-ui',
+            styleLibraryName: 'theme-chalk',
+          },
+        ],
+      ],
+      compact: false,
     },
     splitChunks: {
       layouts: true,

@@ -1,61 +1,97 @@
 <template>
   <div class="modal">
-    <form class="form" @submit.prevent="submit">
-      <h1>Add New Appointment</h1>
+    <client-only>
+      <ValidationObserver ref="observer" tag="div" class="components__item">
+        <form class="form" @submit.prevent="onSubmit">
+          <h1>Add New Appointment</h1>
 
-      <!--FILE CHOOSER-->
-      <div class="form__image">
-        <SvgIcon v-if="!hasProfileImage" name="user" :width="40" />
-        <img v-else :src="profileImage" alt="" class="form__image-icon" />
-        <FileChooser @change="getImage" />
-      </div>
+          <!--FILE CHOOSER-->
+          <div class="form__image">
+            <SvgIcon v-if="!hasProfileImage" name="user" :width="40" />
+            <img v-else :src="profileImage" alt="" class="form__image-icon" />
+            <FileChooser @change="getImage" />
+          </div>
 
-      <!--INPUTS-->
-      <div class="form__inputs">
-        <ValidationObserver
-          v-slot="{ handleSubmit }"
-          ref="observer"
-          tag="div"
-          class="box input-form"
-        >
-          <ValidationProvider
-            v-slot="{ errors }"
-            rules="required"
-            class="box__item"
-            :name="$t('inputs')"
-          >
-            <Input v-model="form.name" :placeholder="placeholder.name" />
-          </ValidationProvider>
-        </ValidationObserver>
+          <!--INPUTS-->
+          <div class="form__inputs">
+            <Input
+              v-model="form.name"
+              type="text"
+              :placeholder="placeholder.name"
+              rules="required"
+              field-name="name"
+            />
+            <Input
+              v-model="form.doctor"
+              type="text"
+              :placeholder="placeholder.doctor"
+              rules="required"
+              field-name="doctor"
+            />
+            <Input
+              v-model="form.email"
+              type="email"
+              :placeholder="placeholder.email"
+              rules="required|email"
+              field-name="email"
+            />
+            <el-date-picker
+              v-model="form.date"
+              onkeydown="return false;"
+              type="date"
+              rules="required"
+              format="dd-MM-yyyy"
+              default-value="2010-10-01"
+            />
+            <Input
+              v-model="form.timeFrom"
+              type="text"
+              :placeholder="placeholder.timeFrom"
+              rules="required"
+              field-name="timeFrom"
+            />
+            <Input
+              v-model="form.timeTo"
+              type="text"
+              :placeholder="placeholder.timeTo"
+              rules="required"
+              field-name="timeTo"
+            />
+            <Input
+              v-model="form.number"
+              :placeholder="placeholder.number"
+              type="number"
+              rules="required|numeric"
+              field-name="number"
+            />
+            <Input
+              v-model="form.injure"
+              :placeholder="placeholder.injure"
+              type="text"
+              rules="required"
+              field-name="injure"
+            />
+          </div>
 
-        <Input :placeholder="placeholder.doctor" />
-        <Input :placeholder="placeholder.email" />
-        <Input :placeholder="placeholder.date" />
-        <Input :placeholder="placeholder.timeFrom" />
-        <Input :placeholder="placeholder.timeTo" />
-        <Input :placeholder="placeholder.number" />
-        <Input :placeholder="placeholder.injure" />
-      </div>
-
-      <!--BUTTONS-->
-      <div class="form__buttons">
-        <Button
-          :text="buttonCancel"
-          class="btn-cancel"
-          @click.native="cancel"
-        />
-        <Button
-          :text="buttonAdd"
-          class="btn-add"
-          @click="handleSubmit(submit)"
-        />
-      </div>
-    </form>
+          <!--BUTTONS-->
+          <div class="form__buttons">
+            <Button
+              type="button"
+              :text="buttonCancel"
+              class="btn-cancel"
+              @click.native="cancel"
+            />
+            <Button type="submit" :text="buttonAdd" class="btn-add" />
+          </div>
+        </form>
+      </ValidationObserver>
+    </client-only>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
+import { DatePicker } from 'element-ui'
 import FileChooser from '~/components/common/FileChooser.vue'
 import Input from '~/components/common/Form/Input.vue'
 import Button from '~/components/common/Button.vue'
@@ -71,7 +107,10 @@ interface IPlaceholder {
   injure: string
 }
 
-@Component({ name: 'ModalAddItem', components: { Button, Input, FileChooser } })
+@Component({
+  name: 'ModalAddItem',
+  components: { Button, Input, FileChooser, [DatePicker.name]: DatePicker },
+})
 export default class ModalAddItem extends Vue {
   placeholder: IPlaceholder = {
     name: 'Name',
@@ -91,6 +130,13 @@ export default class ModalAddItem extends Vue {
 
   form = {
     name: '',
+    doctor: '',
+    email: '',
+    date: '',
+    timeFrom: '',
+    timeTo: '',
+    number: '',
+    injure: '',
   }
 
   get image(): string {
@@ -120,9 +166,12 @@ export default class ModalAddItem extends Vue {
     this.hasProfileImage = true
   }
 
-  submit(): void {
-    console.log('success')
-    console.log(this.form.name)
+  public onSubmit(): void {
+    ;(this as any).$refs.observer.validate().then((success: boolean) => {
+      if (success) {
+        console.log('success')
+      }
+    })
   }
 
   cancel(): void {
@@ -186,6 +235,11 @@ export default class ModalAddItem extends Vue {
       grid-template-columns: 1fr 1fr;
       grid-gap: rem(20px);
       margin: rem(30px) rem(20px) 0 rem(20px);
+
+      .el-input {
+        grid-column: span 2;
+        width: 100%;
+      }
 
       .input {
         grid-column: span 2;

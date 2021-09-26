@@ -4,7 +4,6 @@ import {
   ValidationProvider,
   ValidationObserver,
   extend,
-  configure,
   setInteractionMode
 } from 'vee-validate'
 
@@ -22,9 +21,3 @@ Object.keys(rules).forEach((rule) => {
   })
 })
 
-// @ts-ignore
-export default ({ app }):void => {
-  configure({
-    defaultMessage: (_field_, values) => app.i18n.t(`messages.${values._rule_}`, values)
-  })
-}

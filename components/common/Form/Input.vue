@@ -1,11 +1,23 @@
 <template>
   <div class="input">
-    <input
-      type="text"
-      :placeholder="placeholder"
-      :value="value"
-      @input="$emit('input', $event.target.value)"
-    />
+    <ValidationProvider
+      v-slot="{ errors }"
+      :rules="rules"
+      class="validation-provider"
+      :name="fieldName"
+    >
+      <input
+        :class="{ 'error-border': !!errors[0] }"
+        :type="type"
+        :placeholder="placeholder"
+        :value="value"
+        @input="$emit('input', $event.target.value)"
+      />
+      <slot></slot>
+      <div v-show="!!errors[0]" class="input__error-text">
+        {{ errors[0] }}
+      </div>
+    </ValidationProvider>
   </div>
 </template>
 
@@ -17,7 +29,10 @@ import { Component, Prop, Vue } from 'nuxt-property-decorator'
 })
 export default class Input extends Vue {
   @Prop({ required: true, type: String }) placeholder!: string
+  @Prop({ type: String }) fieldName!: string
   @Prop({ type: String }) value!: string
+  @Prop({ type: String }) rules!: string
+  @Prop({ required: true, type: String }) type!: string
 }
 </script>
 
@@ -48,5 +63,17 @@ export default class Input extends Vue {
       background-color: $white;
     }
   }
+
+  &__error-text {
+    color: $red;
+    margin-left: 10px;
+    font-size: 13px;
+    transition: 0.35s;
+  }
+}
+
+.error-border {
+  border: 1px solid $red !important;
+  transition: 0.35s;
 }
 </style>
